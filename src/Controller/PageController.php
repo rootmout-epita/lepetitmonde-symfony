@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Post;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,6 +16,13 @@ class PageController extends AbstractController
      */
     public function index()
     {
-        return new Response("<body>je suis un test</body>");
+        $posts = $this
+            ->getDoctrine()
+            ->getRepository(Post::class)
+            ->findAll();
+
+        dump($posts);
+
+        return new Response("<body>je suis la homepage</body>");
     }
 }
