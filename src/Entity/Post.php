@@ -36,6 +36,17 @@ class Post
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $slug;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\user", inversedBy="posts")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -85,6 +96,30 @@ class Post
     public function setImage(?string $image): self
     {
         $this->image = $image;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function getAuthor(): ?user
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?user $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }
