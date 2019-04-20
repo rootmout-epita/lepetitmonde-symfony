@@ -3,8 +3,11 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use App\Form\PostType;
 use Parsedown;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -61,19 +64,60 @@ class BackEndController extends AbstractController
 
     /**
      * @Route("/post/new", name="post.new")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function new()
+    public function new(Request $request)
     {
-        //TODO nouveau post
+        $post = new Post();
+        $post->setAuthor($this->getUser());
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() and $form->isValid())
+        {
+            $manager = $this
+                ->getDoctrine()
+                ->getManager();
+
+            $manager->persist($post);
+            $manager->flush();
+
+            $this->addFlash('success', 'Post ajouté avec succès');
+            return $this->redirectToRoute('backend.index');
+        }
+
+        return $this->render('back_end/post_form.html.twig',[
+            'form' => $form->createView(),
+            'title' => "Nouveau post"
+        ]);
     }
 
     /**
      * @Route("/post/edit/{id}", name="post.edit")
      * @param Post $post
      */
-    public function edit(Post $post)
+    public function edit(Post $post, Request $request)
     {
-        //TODO edit le post
+        $form = $this->createForm(PostType::class, $post);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() and $form->isValid())
+        {
+            $manager = $this
+                ->getDoctrine()
+                ->getManager();
+
+            $manager->flush();
+
+            $this->addFlash('success', 'Post modifié avec succès');
+            return $this->redirectToRoute('backend.index');
+        }
+
+        return $this->render('back_end/post_form.html.twig',[
+            'form' => $form->createView(),
+            'title' => "Edition du post"
+        ]);
     }
 
     /**
@@ -82,6 +126,17 @@ class BackEndController extends AbstractController
      */
     public function delete(Post $post)
     {
-        //TODO supprimer le post
+        $this
+            ->getDoctrine()
+            ->getManager()
+            ->remove($post);
+
+        $this
+            ->getDoctrine()
+            ->getManager()
+            ->flush();
+
+        $this->addFlash('success', 'Post supprimé avec succès');
+        return $this->redirectToRoute('backend.index');
     }
 }

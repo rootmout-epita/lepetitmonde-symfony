@@ -1,0 +1,40 @@
+{% extends "template.html.twig" %}
+
+{% block title title %}
+
+{% block body %}
+    <br/>
+    <h1>{{ title }}</h1>
+    <hr>
+
+    <style>
+        .form-group{
+            margin: 0px;
+        }
+    </style>
+
+    {{ form_start(form) }}
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-md-4">
+                {{ form_row(form.title, {'label': 'Titre','attr': {placeholder: 'Je suis un super article :)'}}) }}
+            </div>
+            <div class="col-md-3">
+                {{ form_row(form.image, {'label': 'Nom de l\'image','attr': {placeholder: 'ex: paris.jpg'}}) }}
+            </div>
+            <div class="col-md-4">
+                {{ form_row(form.pub_date, {'label': 'Date de publication','attr': {placeholder: ' '}}) }}
+            </div>
+        </div>
+        <div class="">
+            {{ form_row(form.content, {'label': 'Contenue','attr': {placeholder: ' ', }}) }}
+        </div>
+    </div>
+    <br/><br>
+    {{ form_widget(form) }}
+    <div class="row-fluid">
+        <a href="{{ path('post.index') }}" class="btn btn-primary">Retour</a>
+        <button type="submit" class="btn btn-success">Valider</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

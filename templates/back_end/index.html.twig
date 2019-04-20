@@ -32,18 +32,18 @@
 
     <table class="table table-striped mt-4 align-middle">
         <thead>
-        <tr>
+        <tr class="">
             <th>ID</th><th>Titre</th><th>Extrait</th><th>Publication</th><th>Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for post in posts %}
-            <tr>
+            <tr class="">
                 <td>{{ post.getId() }}</td>
-                <td>{{ post.getTitle() }}</td>
-                <td>{{ post.getContent() | noMarkdown | truncate(100) }}</td>
+                <td class="">{{ post.getTitle() }}</td>
+                <td class="w-25">{{ post.getContent() | noMarkdown | truncate(50) }}</td>
                 <td>{{ post.getPubDate()|date("d/m/Y H:i:s", "America/New_York") }}</td>
-                <td>
+                <td class="">
                     <a href="{{ path('post.edit', {id: post.getId()}) }}" class="btn btn-secondary"><i class="fas fa-pen"></i> Modifier</a>
 
                     <form method="post" onsubmit="return confirm('Confirmez-vous la suppression de ce post ?')" action="{{ path('post.delete', {id: post.getId()}) }}" style="display: inline-block">
