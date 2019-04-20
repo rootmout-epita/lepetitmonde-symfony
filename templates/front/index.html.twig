@@ -1,0 +1,30 @@
+{% extends 'template.html.twig' %}
+
+{% block title "test" %}
+
+{% block body %}
+    <h1 class="h1 mt-4">Mes dernièrs articles</h1>
+    <hr>
+
+    <div class="card-columns">
+        {% for post in posts %}
+            <div class="card">
+                {% if post.getImage() != null %}
+                    <img src="{{ asset("assets/images/article_header/") }}{{ post.getImage }}" class="card-img-top" alt="">
+                {% endif %}
+
+                <div class="card-body">
+                    <h5 class="card-title">{{ post.getTitle() }}</h5>
+                    <div class="text-primary">{{ post.getPubDate() | date('d/m/Y', 'America/New_York') }}</div>
+                    <hr>
+                    <p class="card-text text-justify">{{ post.getContent | truncate(300+rand()) | noMarkdown }}</p>
+                    <a href="{{ path('post.view', {id: post.getId(), slug: post.getSlug()}) }}" class="btn btn-primary">Lire la suite</a>
+                    <hr>
+                    <strong>Auteur : </strong>{{ post.getAuthor().getDisplayName() }}
+                </div>
+            </div>
+        {% else %}
+            Pas de post à afficher pour le moment...
+        {% endfor %}
+    </div>
+{% endblock %}

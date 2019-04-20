@@ -169,7 +169,12 @@ class User implements UserInterface
 
     public function getDisplayName(): ?string
     {
-        return $this->display_name;
+        if(isset($this->display_name))
+        {
+            return $this->display_name;
+        }
+        return $this->getFirstname() . " " . $this->getLastname();
+
     }
 
     public function setDisplayName(?string $display_name): self

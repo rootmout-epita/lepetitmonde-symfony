@@ -1,0 +1,18 @@
+{% extends 'template.html.twig' %}
+
+{% block title post.getTitle() %}
+
+{% block body %}
+    <h1 class="h1 mt-4">{{ post.getTitle() }}</h1>
+    <hr>
+    <div class="card mb-3">
+        {% if post.getImage() != null %}
+            <img src="{{ asset("assets/images/article_header/") }}{{ post.getImage }}" class="card-img-top" alt="...">
+        {% endif %}
+        <div class="card-body">
+            <h5 class="card-title text-primary">{{ post.getPubDate() | date('d/m/Y') }}</h5>
+            <p class="card-text">{{ post.getContent() | markdown}}</p>
+            <p class="card-text"><small class="text-muted">Auteur: {{ post.getAuthor().getDisplayName() }}</small></p>
+        </div>
+    </div>
+{% endblock %}
