@@ -5,10 +5,17 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @UniqueEntity(
+ *     fields={"username"},
+ *     message="Cet username est déjà utilisé"
+ * )
  */
 class User implements UserInterface
 {
@@ -36,6 +43,11 @@ class User implements UserInterface
     private $password;
 
     /**
+     * @Assert\EqualTo(propertyPath="password", message="Les deux mots de passe ne correspondent pas")
+     */
+    public $confirm_password;
+
+    /**
      * @ORM\Column(type="string", length=255)
      */
     private $firstname;
@@ -56,7 +68,7 @@ class User implements UserInterface
     private $creation_date;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $email;
 
@@ -68,6 +80,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->posts = new ArrayCollection();
+        $this->setCreationDate(new \DateTime());
     }
 
     public function getId(): ?int

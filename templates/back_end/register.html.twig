@@ -1,0 +1,54 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}
+    Inscription
+{% endblock %}
+
+{% block body %}
+    <div class="container text-center">
+        <div class="jumbotron ml-auto mr-auto mt-5" style="width: 400px">
+
+            <h1>Inscription</h1>
+            <p>Créez votre propre compte !</p>
+            <hr class="">
+
+            <style>
+                .form-group{
+                    margin: 0px;
+                }
+            </style>
+
+            {{ form_start(form) }}
+            <div class="container text-center">
+                <div class="m-0 p-0">
+                    {{ form_row(form.username, {'label': ' ','attr': {placeholder: 'Nom d\'utilisateur *'}}) }}
+                </div>
+                <div class="">
+                    {{ form_row(form.firstname, {'label': ' ','attr': {placeholder: 'Prénom *'}}) }}
+                </div>
+                <div class="">
+                    {{ form_row(form.lastname, {'label': ' ','attr': {placeholder: 'Nom *'}}) }}
+                </div>
+                <div class="">
+                    {{ form_row(form.email, {'label': ' ','attr': {placeholder: 'e-mail'}}) }}
+                </div>
+                <div class="">
+                    {{ form_row(form.password, {'label': ' ','attr': {placeholder: 'Mot de passe *'}}) }}
+                </div>
+                <div class="">
+                    {{ form_row(form.confirm_password, {'label': ' ','attr': {placeholder: 'Confirmez le mot de passe *'}}) }}
+                </div>
+                <small class="text-left">(*) requis</small>
+            </div>
+            <br/>
+            {{ form_widget(form) }}
+            <div class="row-fluid">
+                <a href="{{ path('user.login') }}" class="btn btn-primary">Retour</a>
+                <button type="submit" class="btn btn-success">Inscription</button>
+                {{ form_end(form) }}
+            </div>
+        </div>
+    </div>
+
+
+{% endblock body %}

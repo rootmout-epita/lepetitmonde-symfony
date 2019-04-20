@@ -1,0 +1,33 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}
+    Connexion
+{% endblock %}
+
+{% block body %}
+    <div class="container text-center">
+        <div class="jumbotron ml-auto mr-auto mt-5" style="width: 400px">
+            <h1>Connexion</h1>
+            <hr class="my-4">
+            {% if error %}
+                <div class="alert alert-danger">{{ error.messageKey }}</div>
+            {% endif %}
+            <div class="container text-center">
+                <form action="{{ path('user.login') }}" method="post">
+                    <div class="form-group">
+                        <input required placeholder="Nom d'utilisateur" name="_username" class="form-control"/><br/>
+                        <input required placeholder="Mot de passe" name="_password" type="password" class="form-control"/>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-lg btn-block">Connexion</button>
+                    </div>
+                </form>
+            </div>
+            <p>Pas de compte ? <a href="{{ path('user.register') }}">Inscrivez-vous</a> !</p>
+        </div>
+        <a href="{{ path('post.index') }}" class="btn btn-primary">Accueil du site</a>
+
+    </div>
+
+{% endblock %}
+
