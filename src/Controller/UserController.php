@@ -67,6 +67,36 @@ class UserController extends AbstractController
     }
 
     /**
+     * Edit the user settings
+     *
+     * @Route("/my_account", name="user.edit")
+     */
+    public function edit(Request $request, UserPasswordEncoderInterface $encoder)
+    {
+        /** @var User $user */
+        $user = $this->getUser();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        dump($form->isSubmitted() and $form->isValid());
+
+        if($form->isSubmitted())
+        {
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
+            $this->getDoctrine()->getManager()->flush();
+
+            $this->addFlash("success", "Votre compte a été mis à jour correctement");
+            return $this->redirectToRoute("post.index");
+        }
+
+        return $this->render('back_end/edit_user.html.twig', [
+            'form' => $form->createView()
+        ]);
+
+    }
+
+    /**
      * @Route("/logout", name="user.logout")
      */
     public function logout()

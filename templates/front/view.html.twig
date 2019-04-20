@@ -12,7 +12,7 @@
         <div class="card-body">
             <h5 class="card-title text-primary">{{ post.getPubDate() | date('d/m/Y') }}</h5>
             <p class="card-text">{{ post.getContent() | markdown}}</p>
-            <p class="card-text"><small class="text-muted">Auteur: {{ post.getAuthor().getDisplayName() }}</small></p>
+            <p class="card-text"><small class="text-muted">Auteur: {{ post.getAuthor().showNickName() }}</small></p>
         </div>
     </div>
 {% endblock %}

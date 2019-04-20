@@ -1,0 +1,57 @@
+{% extends 'template.html.twig' %}
+
+{% block title %}
+    Modifier mon compte
+{% endblock %}
+
+{% block body %}
+    <br/>
+            <h1>Mon Compte</h1>
+            <hr class="">
+
+            <style>
+                .form-group{
+                    margin: 0px;
+                }
+            </style>
+
+                {{ form_start(form) }}
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-2">
+                            {{ form_row(form.username, {'label': 'Nom d\'utilisateur','attr': {placeholder: ' ', readonly:' '}}) }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ form_row(form.firstname, {'label': 'Prénom','attr': {placeholder: ' '}}) }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ form_row(form.lastname, {'label': 'Nom','attr': {placeholder: ' '}}) }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ form_row(form.display_name, {'label': 'Pseudonyme','attr': {placeholder: ' '}}) }}
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-5">
+                            {{ form_row(form.email, {'label': 'Adresse e-mail','attr': {placeholder: ' '}}) }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ form_row(form.password, {'label': 'Mot de passe','attr': {placeholder: ' '}}) }}
+                        </div>
+                        <div class="col-md-3">
+                            {{ form_row(form.confirm_password, {'label': 'Confirmation mot de passe','attr': {placeholder: ' '}}) }}
+                        </div>
+                    </div>
+                </div>
+                <br/><br>
+                {{ form_widget(form) }}
+                <div class="row-fluid">
+                    <a href="{{ path('post.index') }}" class="btn btn-primary">Retour</a>
+                    <button type="submit" class="btn btn-success">Valider</button>
+                    {{ form_end(form) }}
+                </div>
+
+
+
+
+{% endblock body %}

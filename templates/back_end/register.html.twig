@@ -41,11 +41,11 @@
                 <small class="text-left">(*) requis</small>
             </div>
             <br/>
-            {{ form_widget(form) }}
+            {{ form_widget(form._token) }}
             <div class="row-fluid">
                 <a href="{{ path('user.login') }}" class="btn btn-primary">Retour</a>
                 <button type="submit" class="btn btn-success">Inscription</button>
-                {{ form_end(form) }}
+                {{ form_end(form, {'render_rest': false}) }}
             </div>
         </div>
     </div>

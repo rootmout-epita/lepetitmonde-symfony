@@ -1,11 +1,26 @@
 {% extends 'base.html.twig' %}
 
 {% block nav %}
-    <nav class="navbar navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="{{ path('post.index') }}">
                 <img src="{{ asset('assets/images/logo.png') }}" width="150" height="70" class="d-inline-block align-top" alt="">
             </a>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav mr-auto"></ul>
+
+                {% if app.user %}
+                    Bonjour {{ app.user.showNickName() }}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <a href="{{ path('backend.index') }}" class="ml-3 btn btn-outline-danger">ADMIN</a>
+                    {% endif %}
+                    <a href="{{ path('user.edit') }}" class="ml-3 btn btn-primary">Mon Compte</a>
+                    <a href="{{ path('user.logout') }}" title="Déconnexion" class="ml-2 btn btn-danger"><i class="fas fa-power-off"></i></a>
+                {% else %}
+                    <a href="{{ path('user.login') }}" class="btn btn-primary">Connexion / Inscription</a>
+                {% endif %}
+            </div>
+
         </div>
     </nav>
 {% endblock %}

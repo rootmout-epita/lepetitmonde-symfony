@@ -3,7 +3,7 @@
 {% block title "Home" %}
 
 {% block body %}
-    <h1 class="h1 mt-4">Mes dernièrs articles</h1>
+    <h1 class="h1 mt-4">Mes derniers articles</h1>
     <hr>
 
     <div class="card-columns">
@@ -20,7 +20,7 @@
                     <p class="card-text text-justify">{{ post.getContent | truncate(300+rand()) | noMarkdown }}</p>
                     <a href="{{ path('post.view', {id: post.getId(), slug: post.getSlug()}) }}" class="btn btn-primary">Lire la suite</a>
                     <hr>
-                    <strong>Auteur : </strong>{{ post.getAuthor().getDisplayName() }}
+                    <strong>Auteur : </strong>{{ post.getAuthor().showNickName() }}
                 </div>
             </div>
         {% else %}

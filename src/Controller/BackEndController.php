@@ -3,8 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Post;
+use Parsedown;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Twig\TwigFilter;
+use Twig\TwigFunction;
+use Twig_Extensions_Extension_Text;
 
 
 /**
@@ -14,6 +18,32 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BackEndController extends AbstractController
 {
+
+    private $twig;
+    /**
+     * PostController constructor.
+     * @param \Twig_Environment $twig
+     */
+    public function __construct(\Twig_Environment $twig)
+    {
+        $this->twig =$twig;
+        $this->twig->addExtension(new Twig_Extensions_Extension_Text());
+
+        $this->twig->addFilter(new TwigFilter('markdown',
+            function ($value):string {
+                return (new Parsedown())->text($value);
+            },array('is_safe' => array('html'))
+        ));
+
+        $this->twig->addFilter(new TwigFilter('noMarkdown',
+            function($value)
+            {
+                return preg_replace('`\(.*?\)|[^a-zA-Z0-9 ]`i', '', $value);
+            }));
+
+        $this->twig->addFunction(new TwigFunction('rand', function(){return rand(0,100);}));
+    }
+
     /**
      * @Route("/", name="backend.index")
      */

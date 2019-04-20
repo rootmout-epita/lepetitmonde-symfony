@@ -182,12 +182,7 @@ class User implements UserInterface
 
     public function getDisplayName(): ?string
     {
-        if(isset($this->display_name))
-        {
-            return $this->display_name;
-        }
-        return $this->getFirstname() . " " . $this->getLastname();
-
+        return $this->display_name;
     }
 
     public function setDisplayName(?string $display_name): self
@@ -250,5 +245,14 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function showNickName()
+    {
+        if(isset($this->display_name))
+        {
+            return $this->display_name;
+        }
+        return $this->getFirstname() . " " . $this->getLastname();
     }
 }
