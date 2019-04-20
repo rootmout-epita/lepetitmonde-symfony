@@ -3,12 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Post;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
 use Twig_Extensions_Extension_Text;
