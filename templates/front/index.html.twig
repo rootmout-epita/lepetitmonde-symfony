@@ -18,9 +18,17 @@
                     <div class="text-primary">{{ post.getPubDate() | date('d/m/Y', 'America/New_York') }}</div>
                     <hr>
                     <p class="card-text text-justify">{{ post.getContent | truncate(300+rand()) | noMarkdown }}</p>
-                    <a href="{{ path('post.view', {id: post.getId(), slug: post.getSlug()}) }}" class="btn btn-primary">Lire la suite</a>
+                    <a href="{{ path('post.view', {id: post.getId(), slug: post.getSlug()}) }}" class="btn btn-primary btn-block">Lire la suite</a>
                     <hr>
-                    <strong>Auteur : </strong>{{ post.getAuthor().showNickName() }}
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <strong>Auteur : </strong>{{ post.getAuthor().showNickName() }}
+                        </div>
+                        <div>
+                            <i class="fas fa-comments"></i> {{ post.getComments()|length }}
+                        </div>
+                    </div>
+
                 </div>
             </div>
         {% else %}

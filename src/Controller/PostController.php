@@ -2,7 +2,10 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Post;
+use App\Form\CommentType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -68,7 +71,7 @@ class PostController extends AbstractController
      * @param string $slug
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function view(int $id, string $slug): Response
+    public function view(int $id, string $slug, Request $request): Response
     {
         //Check if post ID exist
         if(!$post = $this
@@ -88,9 +91,33 @@ class PostController extends AbstractController
             ], 301);
         }
 
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() and $form->isValid())
+        {
+            $manager = $this->getDoctrine()->getManager();
+            $comment->setAuthor($this->getUser());
+            /** @var Post $post */
+            $comment->setPost($post);
+            $manager->persist($comment);
+            $manager->flush();
+        }
+
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+
+
+        $comments = $this
+            ->getDoctrine()
+            ->getRepository(Comment::class)
+            ->findBy(['post' => $post->getId()],['pub_date' => 'DESC']);
 
         return $this->render('front/view.html.twig', [
-            "post" => $post
+            "post" => $post,
+            "comments" => $comments,
+            "form" => $form->createView()
         ]);
     }
 }

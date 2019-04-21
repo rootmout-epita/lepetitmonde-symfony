@@ -15,4 +15,29 @@
             <p class="card-text"><small class="text-muted">Auteur: {{ post.getAuthor().showNickName() }}</small></p>
         </div>
     </div>
+    <hr class="mt-5">
+    <h3>Commentaires <span class="badge badge-secondary">{{ post.getComments() | length}}</span></h3>
+    {% if app.user %}
+        {{ form_start(form) }}
+
+        {{ form_widget(form._token) }}
+        {{ form_row(form.content, {label: ' ', attr:{placeholder: 'Rédigez ici votre commentaire'}}) }}
+
+        <button type="submit" class="btn btn-primary btn-block mb-5">Commenter</button>
+
+        {{ form_end(form) }}
+    {% else %}
+        <div class="text-center mb-2">Vous devez vous <a href="{{ path('user.login') }}">connecter</a> pour poster un commentaire.</div>
+    {% endif %}
+    {% for comment in comments %}
+        <div class="card mb-2">
+            <div class="card-body">
+                <p class="font-weight-light text-primary">{{ comment.getAuthor().showNickName() }} - {{ comment.getPubDate() | date("d/m/Y H:i:s", "America/New_York") }}</p>
+                <p class="card-text">{{ comment.getContent() }}</p>
+            </div>
+        </div>
+    {% else %}
+        Aucun commentaire...
+    {% endfor %}
+    <br/><br>
 {% endblock %}
