@@ -10,7 +10,9 @@
         {% for post in posts %}
             <div class="card">
                 {% if post.getImage() != null %}
+                    <a href="{{ path('post.view', {id: post.getId(), slug: post.getSlug()}) }}">
                     <img src="{{ asset("assets/images/article_header/") }}{{ post.getImage }}" class="card-img-top" alt="">
+                    </a>
                 {% endif %}
 
                 <div class="card-body">
